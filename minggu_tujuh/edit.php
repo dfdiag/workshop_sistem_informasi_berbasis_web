@@ -4,7 +4,7 @@ require('koneksi.php');
 if (isset($_POST['update'])) {
     $userId = $_POST['txt_id'];
     $userPass = $_POST['txt_pass'];
-    $userName = $_POST['txt_nama'];
+    $userName = $_POST['txt_name'];
 
     $query = "UPDATE user_detail SET user_password=?, user_fullname=? WHERE id=?";
     $stmt = mysqli_prepare($koneksi, $query);
@@ -26,21 +26,47 @@ while ($row = mysqli_fetch_array($result)) {
     $userPass = $row['user_password'];
     $userName = $row['user_fullname'];
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Edit User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body>
-    <form action="edit.php" method="POST">
-        <input type="hidden" name="txt_id" value="<?php echo $id; ?>">
-        <p>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" name="txt_email" value="<?php echo $userMail; ?>" readonly></p>
-        <p>Password: <input type="password" name="txt_pass" value="<?php echo $userPass; ?>"></p>
-        <p>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" name="txt_nama" value="<?php echo $userName; ?>"></p>
-        <button type="submit" name="update">Update</button>
-    </form>
-    <p><a href="home.php">Kembali</a></p>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-center text-white">
+                        <h1>Edit User</h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="edit.php" method="POST">
+                            <input type="hidden" name="txt_id" value="<?php echo $id; ?>">
+                            <div class="form-group">
+                                <label for="text_email">Email</label>
+                                <input type="email" class="form-control" name="text_email" value="<?= $userMail; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="text_pass">Password</label>
+                                <input type="password" class="form-control" name="txt_pass" value="<?= $userPass; ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="text_name">Full Name</label>
+                                <input type="text" class="form-control" name="txt_name" value="<?= $userName; ?>">
+                            </div>
+                            <button class="btn btn-info" type="submit" name="update">Update</button>
+                            <a href="home.php" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-
-<?php } ?>
+<?php
+}
+?>
